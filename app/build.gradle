@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.example.binding"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        disable 'HardcodedText', 'TextFields', 'UnusedAttribute', 'ValidFragment', 'GradleDependency', 'OnClick', 'MissingPrefix', 'MenuTitle'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile('org.robobinding:robobinding:0.8.12:with-dependencies') {
+        exclude group: 'com.google.guava', module: 'guava'
+    }
+    compile('org.robobinding:extras:0.8.12') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
+    apt "org.robobinding:codegen:0.8.12"
+}
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven() {
+        name 'SonaType snapshot repository'
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
